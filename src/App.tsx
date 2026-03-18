@@ -17,6 +17,7 @@ type Goal = 'bulk' | 'cut' | 'strength' | 'maintain'
 type Experience = 'beginner' | 'intermediate' | 'advanced'
 type TemplateType = 'default' | 'ppl' | 'arnold' | 'upper-lower' | 'full-body' | 'custom'
 type Page = 'today' | 'workout' | 'history' | 'dashboard' | 'settings' | 'templates'
+type ToggleSettingKey = 'soundEnabled' | 'vibrationEnabled' | 'hardcoreMode'
 
 type ExerciseTemplate = {
   id: string
@@ -159,6 +160,12 @@ const dayLabels: Record<DayKey, string> = {
   saturday: 'Saturday',
   sunday: 'Sunday',
 }
+
+const settingToggles: Array<[string, ToggleSettingKey]> = [
+  ['Sound', 'soundEnabled'],
+  ['Vibration', 'vibrationEnabled'],
+  ['Hardcore', 'hardcoreMode'],
+]
 
 const uid = () => Math.random().toString(36).slice(2, 10)
 
@@ -916,34 +923,26 @@ export default function App() {
             <Stepper label="Default Rest (sec)" value={state.settings.defaultRestSec} onChange={(next) => setState((prev) => ({ ...prev, settings: { ...prev.settings, defaultRestSec: next } }))} step={15} />
 
             <div className="grid-3">
-            {[
- {[
-  ['Sound', state.settings.soundEnabled, 'soundEnabled' as const],
-  ['Vibration', state.settings.vibrationEnabled, 'vibrationEnabled' as const],
-  ['Hardcore', state.settings.hardcoreMode, 'hardcoreMode' as const],
-].map(([label, value, key]) => (
-  <button
-    key={key}
-    onClick={() =>
-      setState((prev) => ({
-        ...prev,
-        settings: {
-          ...prev.settings,
-          [key]: !value,
-        },
-      }))
-    }
-    className={value ? 'btn-primary' : 'btn-secondary'}
-  >
-    {label}
-  </button>
-))}
-    }
-    className={value ? 'btn-primary' : 'btn-secondary'}
-  >
-    {String(label)}
-  </button>
-))}
+              {settingToggles.map(([label, key]) => {
+                const value = state.settings[key]
+                return (
+                  <button
+                    key={key}
+                    onClick={() =>
+                      setState((prev) => ({
+                        ...prev,
+                        settings: {
+                          ...prev.settings,
+                          [key]: !prev.settings[key],
+                        },
+                      }))
+                    }
+                    className={value ? 'btn-primary' : 'btn-secondary'}
+                  >
+                    {label}
+                  </button>
+                )
+              })}
             </div>
 
             <button onClick={() => setState((prev) => ({ ...prev, settings: { ...prev.settings, onboardingComplete: true } }))} className="btn-primary">
@@ -1158,34 +1157,26 @@ export default function App() {
                   </select>
                 </label>
                 <div className="grid-3">
-             {[
-{[
-  ['Sound', state.settings.soundEnabled, 'soundEnabled' as const],
-  ['Vibration', state.settings.vibrationEnabled, 'vibrationEnabled' as const],
-  ['Hardcore', state.settings.hardcoreMode, 'hardcoreMode' as const],
-].map(([label, value, key]) => (
-  <button
-    key={key}
-    onClick={() =>
-      setState((prev) => ({
-        ...prev,
-        settings: {
-          ...prev.settings,
-          [key]: !value,
-        },
-      }))
-    }
-    className={value ? 'btn-primary' : 'btn-secondary'}
-  >
-    {label}
-  </button>
-))}
-    }
-    className={value ? 'btn-primary' : 'btn-secondary'}
-  >
-    {String(label)}
-  </button>
-))}
+                  {settingToggles.map(([label, key]) => {
+                    const value = state.settings[key]
+                    return (
+                      <button
+                        key={key}
+                        onClick={() =>
+                          setState((prev) => ({
+                            ...prev,
+                            settings: {
+                              ...prev.settings,
+                              [key]: !prev.settings[key],
+                            },
+                          }))
+                        }
+                        className={value ? 'btn-primary' : 'btn-secondary'}
+                      >
+                        {label}
+                      </button>
+                    )
+                  })}
                 </div>
                 <button onClick={exportData} className="btn-secondary">Export JSON Backup</button>
                 <button onClick={resetAll} className="btn-danger">Reset All Data</button>
