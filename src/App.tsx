@@ -917,20 +917,27 @@ export default function App() {
 
             <div className="grid-3">
             {[
-  ['Sound', state.settings.soundEnabled, 'soundEnabled'],
-  ['Vibration', state.settings.vibrationEnabled, 'vibrationEnabled'],
-  ['Hardcore', state.settings.hardcoreMode, 'hardcoreMode'],
+ {[
+  ['Sound', state.settings.soundEnabled, 'soundEnabled' as const],
+  ['Vibration', state.settings.vibrationEnabled, 'vibrationEnabled' as const],
+  ['Hardcore', state.settings.hardcoreMode, 'hardcoreMode' as const],
 ].map(([label, value, key]) => (
   <button
-    key={String(key)}
+    key={key}
     onClick={() =>
       setState((prev) => ({
         ...prev,
         settings: {
           ...prev.settings,
-          [key as 'soundEnabled' | 'vibrationEnabled' | 'hardcoreMode']: !Boolean(value),
+          [key]: !value,
         },
       }))
+    }
+    className={value ? 'btn-primary' : 'btn-secondary'}
+  >
+    {label}
+  </button>
+))}
     }
     className={value ? 'btn-primary' : 'btn-secondary'}
   >
@@ -1152,20 +1159,27 @@ export default function App() {
                 </label>
                 <div className="grid-3">
              {[
-  ['Sound', state.settings.soundEnabled, 'soundEnabled'],
-  ['Vibration', state.settings.vibrationEnabled, 'vibrationEnabled'],
-  ['Hardcore', state.settings.hardcoreMode, 'hardcoreMode'],
+{[
+  ['Sound', state.settings.soundEnabled, 'soundEnabled' as const],
+  ['Vibration', state.settings.vibrationEnabled, 'vibrationEnabled' as const],
+  ['Hardcore', state.settings.hardcoreMode, 'hardcoreMode' as const],
 ].map(([label, value, key]) => (
   <button
-    key={String(key)}
+    key={key}
     onClick={() =>
       setState((prev) => ({
         ...prev,
         settings: {
           ...prev.settings,
-          [key as 'soundEnabled' | 'vibrationEnabled' | 'hardcoreMode']: !Boolean(value),
+          [key]: !value,
         },
       }))
+    }
+    className={value ? 'btn-primary' : 'btn-secondary'}
+  >
+    {label}
+  </button>
+))}
     }
     className={value ? 'btn-primary' : 'btn-secondary'}
   >
