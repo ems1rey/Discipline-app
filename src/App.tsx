@@ -916,19 +916,27 @@ export default function App() {
             <Stepper label="Default Rest (sec)" value={state.settings.defaultRestSec} onChange={(next) => setState((prev) => ({ ...prev, settings: { ...prev.settings, defaultRestSec: next } }))} step={15} />
 
             <div className="grid-3">
-              {[
-                ['Sound', state.settings.soundEnabled, 'soundEnabled'],
-                ['Vibration', state.settings.vibrationEnabled, 'vibrationEnabled'],
-                ['Hardcore', state.settings.hardcoreMode, 'hardcoreMode'],
-              ].map(([label, value, key]) => (
-                <button
-                  key={String(key)}
-                  onClick={() => setState((prev) => ({ ...prev, settings: { ...prev.settings, [key]: !value } as UserSettings }))}
-                  className={value ? 'btn-primary' : 'btn-secondary'}
-                >
-                  {String(label)}
-                </button>
-              ))}
+            {[
+  ['Sound', state.settings.soundEnabled, 'soundEnabled'],
+  ['Vibration', state.settings.vibrationEnabled, 'vibrationEnabled'],
+  ['Hardcore', state.settings.hardcoreMode, 'hardcoreMode'],
+].map(([label, value, key]) => (
+  <button
+    key={String(key)}
+    onClick={() =>
+      setState((prev) => ({
+        ...prev,
+        settings: {
+          ...prev.settings,
+          [key as 'soundEnabled' | 'vibrationEnabled' | 'hardcoreMode']: !Boolean(value),
+        },
+      }))
+    }
+    className={value ? 'btn-primary' : 'btn-secondary'}
+  >
+    {String(label)}
+  </button>
+))}
             </div>
 
             <button onClick={() => setState((prev) => ({ ...prev, settings: { ...prev.settings, onboardingComplete: true } }))} className="btn-primary">
@@ -1143,19 +1151,27 @@ export default function App() {
                   </select>
                 </label>
                 <div className="grid-3">
-                  {[
-                    ['Sound', state.settings.soundEnabled, 'soundEnabled'],
-                    ['Vibration', state.settings.vibrationEnabled, 'vibrationEnabled'],
-                    ['Hardcore', state.settings.hardcoreMode, 'hardcoreMode'],
-                  ].map(([label, value, key]) => (
-                    <button
-                      key={String(key)}
-                      onClick={() => setState((prev) => ({ ...prev, settings: { ...prev.settings, [key]: !value } as UserSettings }))}
-                      className={value ? 'btn-primary' : 'btn-secondary'}
-                    >
-                      {String(label)}
-                    </button>
-                  ))}
+             {[
+  ['Sound', state.settings.soundEnabled, 'soundEnabled'],
+  ['Vibration', state.settings.vibrationEnabled, 'vibrationEnabled'],
+  ['Hardcore', state.settings.hardcoreMode, 'hardcoreMode'],
+].map(([label, value, key]) => (
+  <button
+    key={String(key)}
+    onClick={() =>
+      setState((prev) => ({
+        ...prev,
+        settings: {
+          ...prev.settings,
+          [key as 'soundEnabled' | 'vibrationEnabled' | 'hardcoreMode']: !Boolean(value),
+        },
+      }))
+    }
+    className={value ? 'btn-primary' : 'btn-secondary'}
+  >
+    {String(label)}
+  </button>
+))}
                 </div>
                 <button onClick={exportData} className="btn-secondary">Export JSON Backup</button>
                 <button onClick={resetAll} className="btn-danger">Reset All Data</button>
